@@ -1,13 +1,15 @@
 import random
 from os import system
 
-w, h = 40, 40
+w, h = 50, 50
+c_char = "o"
 
 universe = [[ bool(random.getrandbits(1)) for x in range(w)] for y in range(h)]
 
 while True:
-    system('clear')
 
+    # Set up a frame to write to in memory before screen for visual performance
+    universe_frame = ""
     for y in range(h):
         for x in range(w):
             # Neighbour_coords n,ne,e,se,s,sw,w,nw
@@ -30,5 +32,8 @@ while True:
                 # Reproduction
                 if neighbour_count == 3:
                     universe[x][y] = True
-        print "".join(["x" if c else " " for c in universe[y]])
-
+        # Add row to universe frame
+        universe_frame += "".join([c_char if c else " " for c in universe[y]]) + "\n"
+    # Print frame
+    system('clear')
+    print universe_frame
