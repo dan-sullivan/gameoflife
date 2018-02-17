@@ -1,11 +1,19 @@
 import random
-from os import system
+from os import system, popen
 
-w, h = 80, 25
-c_char = "o"
+# Get terminal size. Fallback to 08,25
+try:
+    # https://stackoverflow.com/questions/566746/how-to-get-linux-console-window-width-in-python
+    rows, cols = popen('stty size', 'r').read().split()
+except:
+    cols, rows = 80, 25
+
+w, h = int(cols), int(rows) -1 # leave row for gen count
+c_char = "O"
 
 universe = [[ bool(random.getrandbits(1)) for x in range(w)] for y in range(h)]
 
+gens = 1
 while True:
 
     # Set up a frame to write to in memory before screen for visual performance
@@ -33,7 +41,10 @@ while True:
                 if neighbour_count == 3:
                     universe[y][x] = True
         # Add row to universe frame
-        universe_frame += "".join([c_char if c else " " for c in universe[y]]) + "\n"
+        universe_frame += "".join([c_char if c else "." for c in universe[y]]) + "\n"
+    gens += 1
+    universe_frame += "Generations: " + str(gens) 
+
     # Print frame
     system('clear')
     print universe_frame
