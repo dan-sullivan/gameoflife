@@ -7,17 +7,9 @@ universe = [[ bool(random.getrandbits(1)) for x in range(w)] for y in range(h)]
 
 while True:
     system('clear')
-    for row in universe:
-        p_row = []
-        for cell in row:
-            if cell:
-                p_row.append("x")
-            else: 
-                p_row.append(" ")
-        print "".join(p_row)
 
-    for x in range(w):
-        for y in range(h):
+    for y in range(h):
+        for x in range(w):
             # Neighbour_coords n,ne,e,se,s,sw,w,nw
             neighbour_coords = [(x,y-1),(x+1,y-1),(x+1,y),(x+1,y+1),(x,y+1),(x+1,y-1),(x-1,y),(x-1,y-1)] 
             neighbour_count = 0
@@ -38,3 +30,5 @@ while True:
                 # Reproduction
                 if neighbour_count == 3:
                     universe[x][y] = True
+        print "".join(["x" if c else " " for c in universe[y]])
+
