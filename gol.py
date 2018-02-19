@@ -1,7 +1,7 @@
 import random
 from os import system, popen
 
-# Get terminal size. Fallback to 08,25
+# Get terminal size. Fallback to 80,25
 try:
     # https://stackoverflow.com/questions/566746/how-to-get-linux-console-window-width-in-python
     rows, cols = popen('stty size', 'r').read().split()
